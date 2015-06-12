@@ -89,10 +89,18 @@ public class LevelLoader {
         int screenSizeX = Integer.parseInt(levelProps.getProperty("screenSizeX"));
         int screenSizeY = Integer.parseInt(levelProps.getProperty("screenSizeY"));
 
-        LevelDescription levelDescription = new LevelDescription(levelName, fieldSizeX, fieldSizeY, screenSizeX, screenSizeY);
+        int levelProp = Integer.parseInt(levelProps.getProperty("level"));
+
+        if (levelProp != level){
+            System.out.println("Level description is incorrect! Resolve level ID");
+        }
+
+        LevelDescription levelDescription = new LevelDescription(levelName, fieldSizeX, fieldSizeY,
+                screenSizeX, screenSizeY, level);
         for (int i = 0; i < fieldSizeX; i++) {
             for (int j = 0; j < fieldSizeY; j++) {
-                levelDescription.setCellTag(TagType.values()[Integer.parseInt(levelProps.getProperty(this.getCellKeyStr(i, j, "tag")))], i, j);
+                levelDescription.setCellTag(TagType.values()
+                        [Integer.parseInt(levelProps.getProperty(this.getCellKeyStr(i, j, "tag")))], i, j);
             }
         }
 

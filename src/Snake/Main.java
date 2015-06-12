@@ -5,14 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by NEKTO on 18.04.2015.
- */
 public class Main {
-
-    private static int sizeX = 10;
-
-    private static int sizeY = 10;
 
     private static JFrame jframe;
 
@@ -20,21 +13,13 @@ public class Main {
 
     private static RendererPanel rendererPanel;
 
-    private static SnakeScene scene = new SnakeScene(sizeX, sizeY);
+    private static SnakeScene scene = new SnakeScene();
 
     private static final Dimension ButtonSize = new Dimension(135, 35);
 
-
-    /**
-     * It's a point of starting program.
-     * We create a main object of the game.
-     */
     public static void main(String[] args) {
 
-        JButton play ;
-
-        //Container contain = menuframe.getContentPane();
-        //contain.setLayout(new FlowLayout());
+        JButton play;
 
 
         jframe = new JFrame("HEXY SNAKE");
@@ -56,12 +41,12 @@ public class Main {
         //contain.add(play);
 
 
-        JButton results = new JButton("RESULTS");
-        results.setVisible(true);
-        results.setLocation(202, 202);
-        results.setPreferredSize(new Dimension(100,100));
-
-        menuframe.getContentPane().add(results);
+//        JButton results = new JButton("RESULTS");
+//        results.setVisible(true);
+//        results.setLocation(202, 202);
+//        results.setPreferredSize(new Dimension(100,100));
+//
+//        menuframe.getContentPane().add(results);
         menuframe.getContentPane().add(play);
 
 
@@ -69,6 +54,7 @@ public class Main {
         play.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+                scene.loadLevel(2);
                 jframe.add(rendererPanel = new RendererPanel(scene));
                 jframe.setVisible(true);
                 jframe.setSize(440, 440);
@@ -79,23 +65,9 @@ public class Main {
 
         });
 
-        results.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(jframe, "Don't touch me! It will be soon.", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            }
-
-        });
-
-        //jframe.getContentPane().add(results);
-
 
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Snake snake = new Snake();
-
-
-
     }
 }

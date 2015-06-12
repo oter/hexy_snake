@@ -1,23 +1,27 @@
 package Snake;
 
 public class LevelDescription {
-    private int fieldSizeX = 0;
+    private int fieldSizeX = -1;
 
-    private int fieldSizeY = 0;
+    private int fieldSizeY = -1;
 
-    private int screenSizeX = 0;
+    private int level = -1;
 
-    private int screenSizeY = 0;
+    private int screenSizeX = -1;
+
+    private int screenSizeY = -1;
 
     private String levelName;
 
     private TagType[][] field;
 
-    public LevelDescription(String levelName, int fieldSizeX, int fieldSizeY, int screenSizeX, int screenSizeY) {
+    public LevelDescription(String levelName, int fieldSizeX, int fieldSizeY, int screenSizeX, int screenSizeY, int level) {
         setFieldSize(fieldSizeX, fieldSizeY);
         setLevelName(levelName);
+        setScreenSize(screenSizeX, screenSizeY);
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
+        this.level = level;
     }
 
     public int getFieldSizeX() {
@@ -26,6 +30,11 @@ public class LevelDescription {
 
     public int getFieldSizeY() {
         return fieldSizeY;
+    }
+
+    private void setScreenSize(int screenSizeX, int screenSizeY){
+        this.screenSizeX = screenSizeX;
+        this.screenSizeY = screenSizeY;
     }
 
     private void setFieldSize(int fieldSizeX, int fieldSizeY) {
@@ -54,5 +63,17 @@ public class LevelDescription {
 
     public void setLevelName(String levelName) {
         this.levelName = new String(levelName);
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getScreenSizeX() {
+        return screenSizeX;
+    }
+
+    public int getScreenSizeY() {
+        return screenSizeY;
     }
 }
