@@ -6,14 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+
+
 public class ScoresProperties {
+
     private static final Properties scoresProps = new Properties();
 
     public ScoresProperties() {
         loadProperties("scores.properties", scoresProps);
     }
 
-    public int addNewPlayer(String playerName) {
+    public static int addNewPlayer(String playerName) {
         int id = getPlayersCount();
         setPlayersCount(id + 1);
         String keyPlayer = "Player" + Integer.toString(id);
@@ -23,29 +26,29 @@ public class ScoresProperties {
         return id;
     }
 
-    public void setPlayerScores(int id, int score) {
+    public static void setPlayerScores(int id, int score) {
         String keyScores = "PlayerScores" + Integer.toString(id);
         scoresProps.setProperty(keyScores, Integer.toString(score));
     }
 
-    public int getPlayerScores(int id) {
+    public static int getPlayerScores(int id) {
         String keyScores = "PlayerScores" + Integer.toString(id);
         return Integer.parseInt(scoresProps.getProperty(keyScores));
     }
 
-    public void setPlayersCount(int count) {
+    public static void setPlayersCount(int count) {
         scoresProps.setProperty("playersCount", Integer.toString(count));
     }
 
-    public int getPlayersCount() {
+    public static int getPlayersCount() {
         return Integer.parseInt(scoresProps.getProperty("playersCount"));
     }
 
-    public String getCurrentPlayerName() {
+    public static String getCurrentPlayerName() {
         return scoresProps.getProperty("currentPlayer");
     }
 
-    public String getPlayerName(int id) {
+    public static String getPlayerName(int id) {
         String key = "Player" + Integer.toString(id);
         return scoresProps.getProperty(key);
     }

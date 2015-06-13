@@ -29,7 +29,7 @@ public class RendererPanel extends JPanel {
         super.paintComponent(g);
 
         g.drawRect(0, 0, super.getWidth(), super.getHeight());
-        g.setColor(SnakeProperties.getBackgroundColor());
+        g.setColor(SnakeProperties.backgroundColor);
         g.fillRect(0, 0, super.getWidth(), super.getHeight());
 
         scene.redraw(g);

@@ -29,13 +29,23 @@ public class Main {
         JFrame frame = new JFrame("Hexy Snake");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        MainMenu mainMenu = new MainMenu();
-        frame.setContentPane(mainMenu);
+        //MainMenu mainMenu = new MainMenu();
+        //frame.setContentPane(mainMenu);
 
-        frame.setSize(mainMenu.getSize());
-        frame.setMinimumSize(mainMenu.getSize());
+
+//        frame.setSize(mainMenu.getSize());
+//        frame.setMinimumSize(mainMenu.getSize());
+
         frame.setVisible(true);
         frame.setResizable(false);
+
+        NewPlayerMenu newPlayerMenu = new NewPlayerMenu();
+        frame.setContentPane(newPlayerMenu);
+
+        frame.setSize(newPlayerMenu.getSize());
+        frame.setMinimumSize(newPlayerMenu.getSize());
+
+        newPlayerMenu.focusUserField();
 
 //
 //        menuframe.getContentPane().add(results);

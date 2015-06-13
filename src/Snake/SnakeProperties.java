@@ -4,6 +4,7 @@ package Snake;
 import java.awt.*;
 
 public class SnakeProperties {
+    private static final ScoresProperties scoresProperties = new ScoresProperties();
 
     private static final int polygonPoints = 6;
 
@@ -13,9 +14,28 @@ public class SnakeProperties {
 
     private static int ceilRadius = 20;
 
-    private static Color menuBackgroundColor = new Color(0x8EA9E8);
+    public static final Font playerFont = new Font("Curlz MT", Font.BOLD, 40);
 
-    private static final Color backgroundColor = new Color(244, 164, 96);
+    public static final Font buttonFont = new Font("Times New Roman", Font.BOLD, 40);
+
+    public static final Font footerFont = new Font("Curlz MT", Font.BOLD, 60);
+
+    public static final Color scoresLabelColor = new Color(0xF23E43);
+
+    public static final Color footerLabelColor = new Color(0xBCAB66);
+
+    public static final Color menuBackgroundColor = new Color(0x82B1DB);
+
+    public static final Color playButtonColor = new Color(0x6578CA);
+    public static final Color playerButtonColor = new Color(0x5753FF);
+    public static final Color scoresButtonColor = new Color(0x44BE85);
+    public static final Color exitButtonColor = new Color(0xC8856A);
+
+    public static final Color hoverButtonColor = new Color(0x618BB4);
+
+    public static final Color clickedButtonColor = new Color(0x98CEFF);
+
+    public static final Color backgroundColor = new Color(244, 164, 96);
 
     private static final Color emptyTagColor = new Color(255, 218, 185);
 
@@ -39,14 +59,6 @@ public class SnakeProperties {
 
     public static int getPolygonPoints() {
         return polygonPoints;
-    }
-
-    public static Color getMenuBackgroundColor() {
-        return menuBackgroundColor;
-    }
-
-    public static final Color getBackgroundColor() {
-        return backgroundColor;
     }
 
     public static final Color getSnakeNextColor(Color color) {
