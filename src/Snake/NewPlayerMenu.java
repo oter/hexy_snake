@@ -1,8 +1,11 @@
 package Snake;
 
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class NewPlayerMenu extends JPanel {
 
@@ -10,15 +13,27 @@ public class NewPlayerMenu extends JPanel {
 
     private static final Dimension size = new Dimension(809, 730);
 
-    JTextField newUserField = new JTextField("Player");
+    private static GameStateProvider gameStateProvider;
 
-    public void focusUserField() {
-        newUserField.requestFocusInWindow();
-        newUserField.selectAll();
+    JTextField newPlayerField = new JTextField("Player");
+
+    private static GameStateProvider getGameStateProvider() {
+        return gameStateProvider;
     }
 
+    public void focusUserField() {
+        newPlayerField.requestFocusInWindow();
+        newPlayerField.selectAll();
+    }
 
-    public NewPlayerMenu() {
+    private final void okClick() {
+        ScoresProperties.addNewPlayer(newPlayerField.getText());
+        getGameStateProvider().setGameState(GameStates.MAIN_MENU);
+    }
+
+    public NewPlayerMenu(GameStateProvider gameStateProvider) {
+        NewPlayerMenu.gameStateProvider = gameStateProvider;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setLayout(new GridLayout(10, 1));
         setBackground(SnakeProperties.menuBackgroundColor);
@@ -32,28 +47,45 @@ public class NewPlayerMenu extends JPanel {
         newPlayerLabel.setFont(SnakeProperties.footerFont);
         newPlayerLabel.setForeground(SnakeProperties.footerLabelColor);
 
-
-        newUserField.setOpaque(false);
-        newUserField.setBorder(BorderFactory.createEmptyBorder());
-
-        newUserField.setFont(SnakeProperties.playerFont);
-        newUserField.setSelectedTextColor(SnakeProperties.playerButtonColor);
-        newUserField.setForeground(SnakeProperties.playerButtonColor);
-        newUserField.setHorizontalAlignment(JTextField.CENTER);
+        newPlayerField.setOpaque(false);
+        newPlayerField.setBorder(BorderFactory.createEmptyBorder());
+        newPlayerField.setFont(SnakeProperties.playerFont);
+        newPlayerField.setSelectedTextColor(SnakeProperties.playerButtonColor);
+        newPlayerField.setForeground(SnakeProperties.playerButtonColor);
+        newPlayerField.setHorizontalAlignment(JTextField.CENTER);
 
         Color hoverColor = SnakeProperties.hoverButtonColor;
         Color pressedColor = SnakeProperties.clickedButtonColor;
 
-        ActionButton okButton = new ActionButton("OK", SnakeProperties.playButtonColor,
+        final ActionButton okButton = new ActionButton("OK", SnakeProperties.playButtonColor,
                 pressedColor, hoverColor, SnakeProperties.buttonFont);
 
+        newPlayerField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    okClick();
+                }
+            }
+        });
+
+        okButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                okClick();
+            }
+        });
 
         ActionButton cancelButton = new ActionButton("CANCEL", SnakeProperties.scoresButtonColor,
                 pressedColor, hoverColor, SnakeProperties.buttonFont);
 
-        cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-
+        cancelButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                getGameStateProvider().setGameState(GameStates.MAIN_MENU);
             }
         });
 
@@ -61,15 +93,13 @@ public class NewPlayerMenu extends JPanel {
         add(Box.createVerticalGlue());
         add(newPlayerLabel);
         add(Box.createVerticalGlue());
-        add(newUserField);
+        add(newPlayerField);
 
         add(Box.createVerticalGlue());
         add(okButton);
         add(cancelButton);
         add(Box.createVerticalGlue());
         add(Box.createVerticalGlue());
-
-
     }
 
     @Override

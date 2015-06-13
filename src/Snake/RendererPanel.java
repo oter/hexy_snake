@@ -15,8 +15,6 @@ public class RendererPanel extends JPanel {
 
     private GridBagLayout layout;
 
-    //private JButton play;
-
     public RendererPanel(){
 
         this.layout = new GridBagLayout();

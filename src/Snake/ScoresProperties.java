@@ -1,22 +1,17 @@
 package Snake;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Properties;
 
-
-
 public class ScoresProperties {
 
-    private static final Properties scoresProps = new Properties();
+    private static Properties scoresProps = new Properties();
 
     public ScoresProperties() {
-        loadProperties("scores.properties", scoresProps);
+        loadProperties(SnakeProperties.scoresFileName, scoresProps);
     }
 
     public static LinkedList<ScoreRecord> getScoresRecords() {
@@ -37,19 +32,44 @@ public class ScoresProperties {
         return records;
     }
 
-    public static int addNewPlayer(String playerName) {
-        int id = getPlayersCount();
-        setPlayersCount(id + 1);
-        String keyPlayer = "Player" + Integer.toString(id);
-        scoresProps.setProperty(keyPlayer, playerName);
-        setPlayerScores(id, 0);
+    public static void emptyScores() {
+        String currentPlayerName = getCurrentPlayerName();
+        int currentPlayerScore = getPlayerScore(currentPlayerName);
+        int playersCount = 1;
 
-        return id;
+        Properties properties = new Properties();
+
+        properties.setProperty("Player0", currentPlayerName);
+        properties.setProperty("PlayerScores0", Integer.toString(currentPlayerScore));
+        properties.setProperty("playersCount", Integer.toString(playersCount));
+        properties.setProperty("currentPlayer", currentPlayerName);
+        saveProperties(SnakeProperties.scoresFileName, properties);
+        scoresProps = properties;
     }
 
-    public static void setPlayerScores(int id, int score) {
+    public static int addNewPlayer(String playerName) {
+        int id = getPlayerId(playerName);
+        if (id == -1) {
+            int newId = getPlayersCount();
+            setPlayersCount(newId + 1);
+            String keyPlayer = "Player" + Integer.toString(newId);
+            saveProperties(SnakeProperties.scoresFileName, scoresProps);
+            scoresProps.setProperty(keyPlayer, playerName);
+            setPlayerScore(newId, 0);
+            setCurrentPlayer(playerName);
+
+            return newId;
+        } else {
+            setCurrentPlayer(playerName);
+
+            return id;
+        }
+    }
+
+    public static void setPlayerScore(int id, int score) {
         String keyScores = "PlayerScores" + Integer.toString(id);
         scoresProps.setProperty(keyScores, Integer.toString(score));
+        saveProperties(SnakeProperties.scoresFileName, scoresProps);
     }
 
     public static int getPlayerScore(int id) {
@@ -68,10 +88,16 @@ public class ScoresProperties {
 
     public static void setPlayersCount(int count) {
         scoresProps.setProperty("playersCount", Integer.toString(count));
+        saveProperties(SnakeProperties.scoresFileName, scoresProps);
     }
 
     public static int getPlayersCount() {
         return Integer.parseInt(scoresProps.getProperty("playersCount"));
+    }
+
+    public static void setCurrentPlayer(String playerName) {
+        scoresProps.setProperty("currentPlayer", playerName);
+        saveProperties(SnakeProperties.scoresFileName, scoresProps);
     }
 
     public static String getCurrentPlayerName() {
@@ -96,13 +122,24 @@ public class ScoresProperties {
         try {
             File propsFile = new File(fileName);
             FileInputStream inputStream = new FileInputStream(propsFile);
-
             properties.load(inputStream);
             inputStream.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void saveProperties(String fileName, Properties properties) {
+        try {
+            File f = new File(fileName);
+            OutputStream outStream = new FileOutputStream(f);
+            properties.store(outStream, "Scores table");
+            outStream.close();
+        }
+        catch (Exception e ) {
             e.printStackTrace();
         }
     }

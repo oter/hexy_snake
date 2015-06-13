@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-    private static JFrame menuFrame;
+    private static final JFrame gameFrame = new JFrame("Hexy Snake");
 
     private static RendererPanel rendererPanel;
 
@@ -21,42 +21,7 @@ public class Main {
         System.setProperty("awt.useSystemAAFontSettings","on");
         System.setProperty("swing.aatext", "true");
 
-
-
-       // menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-
-        JFrame frame = new JFrame("Hexy Snake");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //MainMenu mainMenu = new MainMenu();
-        //frame.setContentPane(mainMenu);
-
-
-//        frame.setSize(mainMenu.getSize());
-//        frame.setMinimumSize(mainMenu.getSize());
-
-        frame.setVisible(true);
-        frame.setResizable(false);
-
-//        ScoresMenu scoresMenu = new ScoresMenu();
-//        frame.setContentPane(scoresMenu);
-//        frame.setSize(scoresMenu.getSize());
-//        frame.setMinimumSize(scoresMenu.getSize());
-
-////////////////////////////////////////////////
-//        NewPlayerMenu newPlayerMenu = new NewPlayerMenu();
-//        frame.setContentPane(newPlayerMenu);
-//
-//        frame.setSize(newPlayerMenu.getSize());
-//        frame.setMinimumSize(newPlayerMenu.getSize());
-//
-//        newPlayerMenu.focusUserField();
-////////////////////////////////////////////////
-//
-//        menuframe.getContentPane().add(results);
-        //menuframe.getContentPane().add(play);
-        //menuframe.getContentPane().add(playButton, new Dimension(50, 50));
+        GameStateProvider gameStateProvider = new GameStateProvider(GameStates.MAIN_MENU);
 
 
         //jframe.add(rendererPanel = new RendererPanel(scene));

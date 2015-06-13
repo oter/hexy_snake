@@ -12,7 +12,15 @@ public class ScoresMenu extends JPanel {
 
     private static final Dimension size = new Dimension(809, 730);
 
-    public ScoresMenu() {
+    private static GameStateProvider gameStateProvider;
+
+    private static GameStateProvider getGameStateProvider() {
+        return gameStateProvider;
+    }
+
+    public ScoresMenu(GameStateProvider gameStateProvider) {
+        ScoresMenu.gameStateProvider = gameStateProvider;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setLayout(new GridLayout(14, 1));
         setBackground(SnakeProperties.menuBackgroundColor);
@@ -37,7 +45,7 @@ public class ScoresMenu extends JPanel {
 
         cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-
+                getGameStateProvider().setGameState(GameStates.MAIN_MENU);
             }
         });
 
@@ -61,7 +69,7 @@ public class ScoresMenu extends JPanel {
 
         int maxTabulationSize = 250 + metrics.stringWidth(new String(leftTabulation));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < SnakeProperties.scoreTablePlayersCount; i++) {
             StringBuffer buffer = new StringBuffer(100);
             buffer.append(leftTabulation, 0, 20);
             buffer.append(i + 1);

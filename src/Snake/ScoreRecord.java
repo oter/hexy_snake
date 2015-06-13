@@ -2,6 +2,7 @@ package Snake;
 
 
 public class ScoreRecord {
+
     private String playerName;
 
     private int score;
@@ -10,7 +11,6 @@ public class ScoreRecord {
         this.playerName = playerName;
         this.score = score;
     }
-
 
     public String getPlayerName() {
         return playerName;

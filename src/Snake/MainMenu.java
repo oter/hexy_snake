@@ -2,6 +2,8 @@ package Snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainMenu extends JPanel {
 
@@ -9,21 +11,27 @@ public class MainMenu extends JPanel {
 
     private static final Dimension size = new Dimension(809, 730);
 
+    private GameStateProvider gameStateProvider;
 
-    public MainMenu() {
+    private GameStateProvider getGameStateProvider() {
+        return gameStateProvider;
+    }
+
+
+    public MainMenu(GameStateProvider gameStateProvider) {
+        this.gameStateProvider = gameStateProvider;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setLayout(new GridLayout(15, 1));
+        setLayout(new GridLayout(14, 1));
         setBackground(SnakeProperties.menuBackgroundColor);
         setMaximumSize(size);
         setSize(size);
         setPreferredSize(size);
         setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
-
-
         JLabel welcomeLabel = new JLabel("WELCOME", SwingConstants.CENTER);
-        JLabel scoreLabel = new JLabel("Score: " + Integer.toString(ScoresProperties.getPlayerScore(0)), SwingConstants.CENTER);
-
+        int currentPlayerScore = ScoresProperties.getPlayerScore(ScoresProperties.getCurrentPlayerName());
+        JLabel scoreLabel = new JLabel("Score: " + Integer.toString(currentPlayerScore), SwingConstants.CENTER);
 
         welcomeLabel.setFont(SnakeProperties.footerFont);
         welcomeLabel.setForeground(SnakeProperties.footerLabelColor);
@@ -38,17 +46,58 @@ public class MainMenu extends JPanel {
         ActionButton newPlayerButton = new ActionButton(ScoresProperties.getCurrentPlayerName(), SnakeProperties.playerButtonColor,
                 pressedColor, hoverColor, SnakeProperties.playerFont);
 
-        ActionButton playButton = new ActionButton("PLAY", SnakeProperties.playButtonColor,
-                pressedColor, hoverColor, SnakeProperties.buttonFont);
+        newPlayerButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                getGameStateProvider().setGameState(GameStates.NEW_PLAYER_MENU);
+            }
+        });
 
+        ActionButton playButton = new ActionButton("PLAY", SnakeProperties.playButtonColor, pressedColor, hoverColor,
+                SnakeProperties.buttonFont);
 
-        ActionButton scoresButton = new ActionButton("SCORES", SnakeProperties.scoresButtonColor,
-                pressedColor, hoverColor, SnakeProperties.buttonFont);
+        playButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
 
-        ActionButton exitButton = new ActionButton("EXIT", SnakeProperties.exitButtonColor,
-                pressedColor, hoverColor, SnakeProperties.buttonFont);
+            }
+        });
 
-        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        ActionButton scoresButton = new ActionButton("SCORES", SnakeProperties.scoresButtonColor, pressedColor,
+                hoverColor, SnakeProperties.buttonFont);
+
+        scoresButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                getGameStateProvider().setGameState(GameStates.SCORES_MENU);
+            }
+        });
+
+        scoresButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                getGameStateProvider().setGameState(GameStates.SCORES_MENU);
+            }
+        });
+
+        ActionButton emptyScoresButton = new ActionButton("EMPTY", SnakeProperties.scoresButtonColor, pressedColor,
+                hoverColor, SnakeProperties.buttonFont);
+
+        emptyScoresButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                ScoresProperties.emptyScores();
+            }
+        });
+
+        ActionButton exitButton = new ActionButton("EXIT", SnakeProperties.exitButtonColor, pressedColor, hoverColor,
+                SnakeProperties.buttonFont);
+        exitButton.addMouseListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.exit(0);
             }
@@ -56,21 +105,20 @@ public class MainMenu extends JPanel {
 
         add(Box.createVerticalGlue());
         add(Box.createVerticalGlue());
+        add(Box.createVerticalGlue());
         add(welcomeLabel);
         add(Box.createVerticalGlue());
         add(newPlayerButton);
         add(scoreLabel);
         add(Box.createVerticalGlue());
-
         add(Box.createVerticalGlue());
         add(playButton);
-        add(Box.createVerticalGlue());
         add(scoresButton);
-        add(Box.createVerticalGlue());
+        add(emptyScoresButton);
         add(exitButton);
         add(Box.createVerticalGlue());
-        add(Box.createVerticalGlue());
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {

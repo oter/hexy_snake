@@ -21,7 +21,6 @@ public class ActionButton extends JButton {
         setBorderPainted(false);
         setFocusPainted(false);
 
-
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -48,8 +47,5 @@ public class ActionButton extends JButton {
                 setForeground(_normalColor);
             }
         });
-
     }
-
-
 }
