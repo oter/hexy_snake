@@ -9,8 +9,6 @@ import java.awt.event.MouseEvent;
 
 public class NewPlayerMenu extends JPanel {
 
-    private static final Image menuImage = new ImageIcon("resources/menu/MenuImage_800x700.png").getImage();
-
     private static final Dimension size = new Dimension(809, 730);
 
     private static GameStateProvider gameStateProvider;
@@ -105,6 +103,6 @@ public class NewPlayerMenu extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(menuImage, 0, 0, null);
+        g.drawImage(SnakeProperties.menuImage, 0, 0, null);
     }
 }

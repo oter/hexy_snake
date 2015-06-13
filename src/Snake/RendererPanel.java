@@ -11,13 +11,7 @@ public class RendererPanel extends JPanel {
         this.scene = scene;
     }
 
-    private GridBagConstraints c;
-
-    private GridBagLayout layout;
-
     public RendererPanel(){
-
-        this.layout = new GridBagLayout();
 
     }
 

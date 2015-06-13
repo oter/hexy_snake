@@ -41,7 +41,12 @@ public class GameStateProvider extends JFrame {
                 setContentPane(scoresMenu);
                 setSize(scoresMenu.getSize());
                 setMinimumSize(scoresMenu.getSize());
-
+                break;
+            case GAME_OVER_MENU:
+                GameOverMenu gameOverMenu = new GameOverMenu(this, 100500);
+                setContentPane(gameOverMenu);
+                setSize(gameOverMenu.getSize());
+                setMinimumSize(gameOverMenu.getSize());
                 break;
         }
     }

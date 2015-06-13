@@ -21,7 +21,7 @@ public class Main {
         System.setProperty("awt.useSystemAAFontSettings","on");
         System.setProperty("swing.aatext", "true");
 
-        GameStateProvider gameStateProvider = new GameStateProvider(GameStates.MAIN_MENU);
+        GameStateProvider gameStateProvider = new GameStateProvider(GameStates.GAME_OVER_MENU);
 
 
         //jframe.add(rendererPanel = new RendererPanel(scene));

@@ -7,8 +7,6 @@ import java.awt.event.MouseEvent;
 
 public class MainMenu extends JPanel {
 
-    private static final Image menuImage = new ImageIcon("resources/menu/MenuImage_800x700.png").getImage();
-
     private static final Dimension size = new Dimension(809, 730);
 
     private GameStateProvider gameStateProvider;
@@ -84,7 +82,7 @@ public class MainMenu extends JPanel {
             }
         });
 
-        ActionButton emptyScoresButton = new ActionButton("EMPTY", SnakeProperties.scoresButtonColor, pressedColor,
+        ActionButton emptyScoresButton = new ActionButton("EMPTY", SnakeProperties.emptyButtonColor, pressedColor,
                 hoverColor, SnakeProperties.buttonFont);
 
         emptyScoresButton.addMouseListener(new MouseAdapter() {
@@ -105,7 +103,6 @@ public class MainMenu extends JPanel {
 
         add(Box.createVerticalGlue());
         add(Box.createVerticalGlue());
-        add(Box.createVerticalGlue());
         add(welcomeLabel);
         add(Box.createVerticalGlue());
         add(newPlayerButton);
@@ -117,12 +114,13 @@ public class MainMenu extends JPanel {
         add(emptyScoresButton);
         add(exitButton);
         add(Box.createVerticalGlue());
+        add(Box.createVerticalGlue());
     }
 
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(menuImage, 0, 0, null);
+        g.drawImage(SnakeProperties.menuImage, 0, 0, null);
     }
 }

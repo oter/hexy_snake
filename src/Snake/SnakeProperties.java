@@ -1,6 +1,7 @@
 package Snake;
 
 
+import javax.swing.*;
 import java.awt.*;
 
 public class SnakeProperties {
@@ -14,6 +15,8 @@ public class SnakeProperties {
     private static int ceilRadius = 20;
 
     public static final int scoreTablePlayersCount = 8;
+
+    public static final Image menuImage = new ImageIcon("resources/menu/MenuImage_800x700.png").getImage();
 
     public static final String scoresFileName = "scores.properties";
 
@@ -36,6 +39,7 @@ public class SnakeProperties {
     public static final Color playButtonColor = new Color(0x6578CA);
     public static final Color playerButtonColor = new Color(0x5753FF);
     public static final Color scoresButtonColor = new Color(0x44BE85);
+    public static final Color emptyButtonColor = new Color(0xB65A6C);
     public static final Color exitButtonColor = new Color(0xC8856A);
 
     public static final Color hoverButtonColor = new Color(0x618BB4);
