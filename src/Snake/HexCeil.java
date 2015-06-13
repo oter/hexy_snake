@@ -4,9 +4,6 @@ import java.awt.*;
 
 public class HexCeil extends JComponent {
 
-
-
-
     private static final CeilGenerator ceilGenerator = new CeilGenerator(SnakeProperties.getPolygonPoints(),
             SnakeProperties.getCeilRadius());
 

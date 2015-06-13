@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-    private static JFrame jframe;
-
-    private static JFrame menuframe;
+    private static JFrame menuFrame;
 
     private static RendererPanel rendererPanel;
 
@@ -19,55 +17,34 @@ public class Main {
 
     public static void main(String[] args) {
 
-        JButton play;
+        // enable anti-aliased text:
+        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("swing.aatext", "true");
 
 
-        jframe = new JFrame("HEXY SNAKE");
-        jframe.setVisible(false);
-        jframe.setSize(440, 440);
-        jframe.setLocationRelativeTo(null);
 
-        menuframe = new JFrame("MENU HEXY SNAKE");
-        menuframe.setVisible(true);
-        menuframe.setSize(440, 440);
-        menuframe.setLocationRelativeTo(null);
-        menuframe.setDefaultCloseOperation(menuframe.EXIT_ON_CLOSE);
+       // menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-        play = new JButton("PLAY");
-        play.setVisible(true);
-        play.setLocation(100, 50);
-        play.setPreferredSize(new Dimension(100, 100));
-        //contain.add(play);
+        JFrame frame = new JFrame("Hexy Snake");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        MainMenu mainMenu = new MainMenu();
+        frame.setContentPane(mainMenu);
 
-//        JButton results = new JButton("RESULTS");
-//        results.setVisible(true);
-//        results.setLocation(202, 202);
-//        results.setPreferredSize(new Dimension(100,100));
+        frame.setSize(mainMenu.getSize());
+        frame.setMinimumSize(mainMenu.getSize());
+        frame.setVisible(true);
+        frame.setResizable(false);
+
 //
 //        menuframe.getContentPane().add(results);
-        menuframe.getContentPane().add(play);
+        //menuframe.getContentPane().add(play);
+        //menuframe.getContentPane().add(playButton, new Dimension(50, 50));
 
 
-
-        play.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                scene.loadLevel(2);
-                jframe.add(rendererPanel = new RendererPanel(scene));
-                jframe.setVisible(true);
-                jframe.setSize(440, 440);
-                jframe.setLocationRelativeTo(null);
-                menuframe.setVisible(false);
-
-            }
-
-        });
-
-
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        Snake snake = new Snake();
+        //jframe.add(rendererPanel = new RendererPanel(scene));
+        //jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Snake snake = new Snake();
     }
 }

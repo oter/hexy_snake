@@ -13,6 +13,8 @@ public class SnakeProperties {
 
     private static int ceilRadius = 20;
 
+    private static Color menuBackgroundColor = new Color(0x8EA9E8);
+
     private static final Color backgroundColor = new Color(244, 164, 96);
 
     private static final Color emptyTagColor = new Color(255, 218, 185);
@@ -37,6 +39,10 @@ public class SnakeProperties {
 
     public static int getPolygonPoints() {
         return polygonPoints;
+    }
+
+    public static Color getMenuBackgroundColor() {
+        return menuBackgroundColor;
     }
 
     public static final Color getBackgroundColor() {
