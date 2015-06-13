@@ -22,7 +22,7 @@ public class MainMenu extends JPanel {
 
 
         JLabel welcomeLabel = new JLabel("WELCOME", SwingConstants.CENTER);
-        JLabel scoreLabel = new JLabel("Score: " + Integer.toString(ScoresProperties.getPlayerScores(0)), SwingConstants.CENTER);
+        JLabel scoreLabel = new JLabel("Score: " + Integer.toString(ScoresProperties.getPlayerScore(0)), SwingConstants.CENTER);
 
 
         welcomeLabel.setFont(SnakeProperties.footerFont);

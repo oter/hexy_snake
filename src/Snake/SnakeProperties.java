@@ -18,7 +18,11 @@ public class SnakeProperties {
 
     public static final Font buttonFont = new Font("Times New Roman", Font.BOLD, 40);
 
-    public static final Font footerFont = new Font("Curlz MT", Font.BOLD, 60);
+    public static final Font footerFont = new Font("Curlz MT", Font.BOLD, 50);
+
+    public static final Font scoresPlayerLabelFont = new Font("Curlz MT", Font.BOLD, 30);
+
+    public static final Color scoresPlayerLabelColor = new Color(0xF2BD36);
 
     public static final Color scoresLabelColor = new Color(0xF23E43);
 

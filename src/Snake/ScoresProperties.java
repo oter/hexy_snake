@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.Properties;
 
 
@@ -14,6 +17,24 @@ public class ScoresProperties {
 
     public ScoresProperties() {
         loadProperties("scores.properties", scoresProps);
+    }
+
+    public static LinkedList<ScoreRecord> getScoresRecords() {
+        LinkedList<ScoreRecord> records = new LinkedList<ScoreRecord>();
+
+        for (int i = 0; i < getPlayersCount(); i++) {
+            ScoreRecord record = new ScoreRecord(getPlayerName(i), getPlayerScore(i));
+            records.add(record);
+        }
+
+        Collections.sort(records, new Comparator<ScoreRecord>() {
+            @Override
+            public int compare(ScoreRecord o1, ScoreRecord o2) {
+                return o2.getScore() - o1.getScore();
+            }
+        });
+
+        return records;
     }
 
     public static int addNewPlayer(String playerName) {
@@ -31,9 +52,18 @@ public class ScoresProperties {
         scoresProps.setProperty(keyScores, Integer.toString(score));
     }
 
-    public static int getPlayerScores(int id) {
+    public static int getPlayerScore(int id) {
         String keyScores = "PlayerScores" + Integer.toString(id);
         return Integer.parseInt(scoresProps.getProperty(keyScores));
+    }
+
+    public static int getPlayerScore(String playerName) {
+        int id = getPlayerId(playerName);
+        if (id  != -1) {
+            return getPlayerScore(id);
+        } else {
+            return 0;
+        }
     }
 
     public static void setPlayersCount(int count) {
@@ -53,7 +83,7 @@ public class ScoresProperties {
         return scoresProps.getProperty(key);
     }
 
-    public int getPlayerId(String playerName) {
+    public static int getPlayerId(String playerName) {
         for (int i = 0; i < getPlayersCount(); i++) {
             if (getPlayerName(i).equals(playerName)) {
                 return i;

@@ -39,14 +39,20 @@ public class Main {
         frame.setVisible(true);
         frame.setResizable(false);
 
-        NewPlayerMenu newPlayerMenu = new NewPlayerMenu();
-        frame.setContentPane(newPlayerMenu);
+//        ScoresMenu scoresMenu = new ScoresMenu();
+//        frame.setContentPane(scoresMenu);
+//        frame.setSize(scoresMenu.getSize());
+//        frame.setMinimumSize(scoresMenu.getSize());
 
-        frame.setSize(newPlayerMenu.getSize());
-        frame.setMinimumSize(newPlayerMenu.getSize());
-
-        newPlayerMenu.focusUserField();
-
+////////////////////////////////////////////////
+//        NewPlayerMenu newPlayerMenu = new NewPlayerMenu();
+//        frame.setContentPane(newPlayerMenu);
+//
+//        frame.setSize(newPlayerMenu.getSize());
+//        frame.setMinimumSize(newPlayerMenu.getSize());
+//
+//        newPlayerMenu.focusUserField();
+////////////////////////////////////////////////
 //
 //        menuframe.getContentPane().add(results);
         //menuframe.getContentPane().add(play);
