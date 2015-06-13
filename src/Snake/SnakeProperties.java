@@ -10,9 +10,9 @@ public class SnakeProperties {
 
     private static final double polygonConstVal = Math.sqrt(3) / 2;
 
-    private static final int betweenLen = 4;
+    public static final int betweenLen = 4;
 
-    private static int ceilRadius = 20;
+    private static int ceilRadius = 30;
 
     public static final int scoreTablePlayersCount = 8;
 
@@ -55,10 +55,6 @@ public class SnakeProperties {
     private static final Color brickFlag = new Color(255, 255, 0);
 
     private static final Color food1Color = new Color(0, 255, 0);
-
-    public static final int getBetweenLen() {
-        return betweenLen;
-    }
 
     public static final double getPolygonConstVal(){
         return polygonConstVal;

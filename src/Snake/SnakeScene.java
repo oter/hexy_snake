@@ -1,12 +1,24 @@
 package Snake;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class SnakeScene {
+public class SnakeScene extends JPanel {
 
     private HexCeil ceilsMatrix[][];
 
     private LevelDescription levelDescription;
+
+    public int getScreenWidth() {
+        return levelDescription.getScreenWidth();
+    }
+
+    public int getScreenHeight() {
+        return levelDescription.getScreenHeight();
+    }
+
+    public SnakeScene() {
+    }
 
     public void setLevel(LevelDescription levelDescription) {
         this.levelDescription = levelDescription;
@@ -21,9 +33,6 @@ public class SnakeScene {
         System.out.println("Level: " + String.valueOf(description.getLevelName()));
     }
 
-    public SnakeScene() {
-    }
-
     public void redraw(Graphics g) {
         for (int i = 0; i < levelDescription.getFieldSizeX(); i++) {
             for (int j = 0; j < levelDescription.getFieldSizeY(); j++) {
@@ -36,7 +45,7 @@ public class SnakeScene {
         ceilsMatrix = new HexCeil[levelDescription.getFieldSizeX()][levelDescription.getFieldSizeY()];
         int ceilsRadius = SnakeProperties.getCeilRadius();
         double polygonVal = SnakeProperties.getPolygonConstVal();
-        int betweenLen = SnakeProperties.getBetweenLen();
+        int betweenLen = SnakeProperties.betweenLen;
 
         double ceilHalf = ceilsRadius * polygonVal;
 
@@ -48,5 +57,18 @@ public class SnakeScene {
                         (int)(j * 2 * (ceilHalf * polygonVal - betweenLen / 2 * polygonVal + 1 / polygonVal * betweenLen)));
             }
         }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        //System.out.println("Paint!");
+
+        g.drawRect(0, 0, getScreenWidth(), getScreenHeight());
+        g.setColor(SnakeProperties.backgroundColor);
+        g.fillRect(0, 0, getScreenWidth(), getScreenHeight());
+
+        redraw(g);
     }
 }

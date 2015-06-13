@@ -59,7 +59,7 @@ public class MainMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
+                getGameStateProvider().setGameState(GameStates.PLAY_GAME);
             }
         });
 

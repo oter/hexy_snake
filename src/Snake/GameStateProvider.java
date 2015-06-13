@@ -2,12 +2,37 @@ package Snake;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameStateProvider extends JFrame {
 
     private static final ScoresProperties scoresProperties = new ScoresProperties();
 
     private static GameStates gameState;
+
+    private int currentLevel;
+
+    private int currentScore;
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void setCurrentScore(int currentScore) {
+        this.currentScore = currentScore;
+    }
+
+    public void nextLevel() {
+
+    }
 
     public static GameStates getGameState() {
         return gameState;
@@ -33,7 +58,13 @@ public class GameStateProvider extends JFrame {
             case PAUSE_MENU:
 
                 break;
-            case PLAY_MENU:
+            case PLAY_GAME:
+                SnakeScene snakeScene = new SnakeScene();
+                snakeScene.loadLevel(1);
+                setContentPane(snakeScene);
+                Dimension screenSize = new Dimension(snakeScene.getScreenWidth(), snakeScene.getScreenHeight());
+                setSize(screenSize);
+                setMinimumSize(screenSize);
 
                 break;
             case SCORES_MENU:
@@ -49,6 +80,7 @@ public class GameStateProvider extends JFrame {
                 setMinimumSize(gameOverMenu.getSize());
                 break;
         }
+        pack();
     }
 
     public GameStateProvider(GameStates gameState) {
@@ -57,7 +89,9 @@ public class GameStateProvider extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
-
+        //Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        //this.setLocation(d.width / 2 - this.getSize().width / 2, d.height / 2 - this.getSize().height / 2);
+        setLocation(200, 200);
         setGameState(gameState);
     }
 }

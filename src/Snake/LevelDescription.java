@@ -69,11 +69,11 @@ public class LevelDescription {
         return level;
     }
 
-    public int getScreenSizeX() {
+    public int getScreenWidth() {
         return screenSizeX;
     }
 
-    public int getScreenSizeY() {
+    public int getScreenHeight() {
         return screenSizeY;
     }
 }

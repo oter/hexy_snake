@@ -9,8 +9,6 @@ public class Main {
 
     private static final JFrame gameFrame = new JFrame("Hexy Snake");
 
-    private static RendererPanel rendererPanel;
-
     private static SnakeScene scene = new SnakeScene();
 
     private static final Dimension ButtonSize = new Dimension(135, 35);
@@ -21,7 +19,7 @@ public class Main {
         System.setProperty("awt.useSystemAAFontSettings","on");
         System.setProperty("swing.aatext", "true");
 
-        GameStateProvider gameStateProvider = new GameStateProvider(GameStates.GAME_OVER_MENU);
+        GameStateProvider gameStateProvider = new GameStateProvider(GameStates.MAIN_MENU);
 
 
         //jframe.add(rendererPanel = new RendererPanel(scene));
