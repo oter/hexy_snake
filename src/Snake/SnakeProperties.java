@@ -14,6 +14,7 @@ public class SnakeProperties {
 
     private static int ceilRadius = 30;
 
+    public static Dimension gameFieldPos = new Dimension(60, 100);
 
     public static final Color levelLabelColor = new Color(0x0D818E);
 

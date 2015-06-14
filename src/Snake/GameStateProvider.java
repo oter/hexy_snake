@@ -85,6 +85,7 @@ public class GameStateProvider extends JFrame {
     }
 
     public GameStateProvider(GameStates gameState) {
+
         GameStateProvider.gameState = gameState;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,5 +95,12 @@ public class GameStateProvider extends JFrame {
         //this.setLocation(d.width / 2 - this.getSize().width / 2, d.height / 2 - this.getSize().height / 2);
         setLocation(200, 200);
         setGameState(gameState);
+    }
+
+    @Override
+    public void paintComponents(Graphics g) {
+        ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        super.paintComponents(g);
     }
 }

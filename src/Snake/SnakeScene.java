@@ -7,11 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.*;
 
 public class SnakeScene extends JPanel {
-
-    private Dimension gameFieldPos = new Dimension(60, 100);
 
     private HexCeil ceilsMatrix[][];
 
@@ -34,6 +31,8 @@ public class SnakeScene extends JPanel {
     }
 
     private GameStateProvider gameStateProvider;
+
+    private Snake snake;
 
     private Timer gameTimer;
 
@@ -65,6 +64,10 @@ public class SnakeScene extends JPanel {
                     getGameStateProvider().setGameState(GameStates.GAME_OVER_MENU);
                     getGameStateProvider().setCurrentScore(currentScore);
                 }
+                if (snake != null) {
+                    snake.changeDirection(e);
+                }
+
             }
         });
 
@@ -85,6 +88,7 @@ public class SnakeScene extends JPanel {
         createCeils();
         time = levelDescription.getTime();
         eatTimes = levelDescription.getEatTimes();
+        snake = new Snake(levelDescription, levelDescription.getSnakeX(), levelDescription.getSnakeY());
         gameTimer = new Timer(1, new ActionListener() {
             int ticks = 0;
             @Override
@@ -98,6 +102,11 @@ public class SnakeScene extends JPanel {
                         endGame();
                     }
                     setTime(getTime() - 1);
+
+                    if (snake != null) {
+                        snake.snakeMove();
+                    }
+
                     repaint();
                 }
             }
@@ -138,7 +147,7 @@ public class SnakeScene extends JPanel {
                 int y = (int)Math.round((j * 2 * (ceilHalf * polygonVal - betweenLen / 2 * polygonVal +
                         1 / polygonVal * betweenLen)));
 
-                ceilsMatrix[i][j] = new HexCeil(x + gameFieldPos.width, y + gameFieldPos.height);
+                ceilsMatrix[i][j] = new HexCeil(x + SnakeProperties.gameFieldPos.width, y + SnakeProperties.gameFieldPos.height);
             }
         }
     }
@@ -177,9 +186,12 @@ public class SnakeScene extends JPanel {
         g.setColor(SnakeProperties.ateTimeLabelColor);
         g.drawString(Integer.toString(ateTimes), 350, 80);
 
-
-
-
+        // draw game field
         redraw(g);
+
+        //draw snake body
+        if (snake != null) {
+            snake.redraw(g);
+        }
     }
 }
