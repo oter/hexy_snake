@@ -59,12 +59,12 @@ public class GameStateProvider extends JFrame {
 
                 break;
             case PLAY_GAME:
-                SnakeScene snakeScene = new SnakeScene();
-                snakeScene.loadLevel(1);
+                SnakeScene snakeScene = new SnakeScene(this, 1);
                 setContentPane(snakeScene);
                 Dimension screenSize = new Dimension(snakeScene.getScreenWidth(), snakeScene.getScreenHeight());
                 setSize(screenSize);
                 setMinimumSize(screenSize);
+                snakeScene.focus();
 
                 break;
             case SCORES_MENU:
@@ -72,9 +72,10 @@ public class GameStateProvider extends JFrame {
                 setContentPane(scoresMenu);
                 setSize(scoresMenu.getSize());
                 setMinimumSize(scoresMenu.getSize());
+                scoresMenu.focus();
                 break;
             case GAME_OVER_MENU:
-                GameOverMenu gameOverMenu = new GameOverMenu(this, 100500);
+                GameOverMenu gameOverMenu = new GameOverMenu(this, getCurrentScore());
                 setContentPane(gameOverMenu);
                 setSize(gameOverMenu.getSize());
                 setMinimumSize(gameOverMenu.getSize());

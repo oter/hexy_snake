@@ -3,6 +3,8 @@ package Snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -14,6 +16,10 @@ public class ScoresMenu extends JPanel {
 
     private static GameStateProvider getGameStateProvider() {
         return gameStateProvider;
+    }
+
+    public void focus() {
+        requestFocusInWindow();
     }
 
     public ScoresMenu(GameStateProvider gameStateProvider) {
@@ -94,6 +100,16 @@ public class ScoresMenu extends JPanel {
         }
         add(cancelButton);
         add(Box.createVerticalGlue());
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    getGameStateProvider().setGameState(GameStates.MAIN_MENU);
+                }
+            }
+        });
     }
 
     @Override

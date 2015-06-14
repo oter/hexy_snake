@@ -14,11 +14,20 @@ public class SnakeProperties {
 
     private static int ceilRadius = 30;
 
+
+    public static final Color levelLabelColor = new Color(0x0D818E);
+
+    public static final Font levelLabelFont = new Font("Curlz MT", Font.BOLD, 40);
+
     public static final int scoreTablePlayersCount = 8;
 
     public static final Image menuImage = new ImageIcon("resources/menu/MenuImage_800x700.png").getImage();
 
     public static final String scoresFileName = "scores.properties";
+
+    public static final Color timerLabelColor = new Color(255, 0, 0);
+
+    public static final Color ateTimeLabelColor = new Color(4, 153, 0);
 
     public static final Font playerFont = new Font("Curlz MT", Font.BOLD, 40);
 
@@ -26,7 +35,7 @@ public class SnakeProperties {
 
     public static final Font footerFont = new Font("Curlz MT", Font.BOLD, 50);
 
-    public static final Font scoresPlayerLabelFont = new Font("Curlz MT", Font.BOLD, 30);
+    public static final Font scoresPlayerLabelFont = new Font("Curlz MT", Font.BOLD, 35);
 
     public static final Color scoresPlayerLabelColor = new Color(0xF2BD36);
 

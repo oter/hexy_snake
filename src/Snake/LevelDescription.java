@@ -11,6 +11,57 @@ public class LevelDescription {
 
     private int screenSizeY = -1;
 
+    private int snakeY = -1;
+
+    private int snakeX = -1;
+
+    private int snakeSpeed = -1;
+
+    public int getSnakeX() {
+        return snakeX;
+    }
+
+    public void setSnakeX(int snakeX) {
+        this.snakeX = snakeX;
+    }
+
+    public int getSnakeY() {
+        return snakeY;
+    }
+
+    public void setSnakeY(int snakeY) {
+        this.snakeY = snakeY;
+    }
+
+    public int getSnakeSpeed() {
+        return snakeSpeed;
+    }
+
+    public void setSnakeSpeed(int snakeSpeed) {
+        this.snakeSpeed = snakeSpeed;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    private int time;
+
+    public int getEatTimes() {
+        return eatTimes;
+    }
+
+    public void setEatTimes(int eatTimes) {
+        this.eatTimes = eatTimes;
+    }
+
+    private int eatTimes;
+
+
     private String levelName;
 
     private TagType[][] field;

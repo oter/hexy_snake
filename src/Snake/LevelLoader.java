@@ -104,6 +104,13 @@ public class LevelLoader {
             }
         }
 
+        levelDescription.setEatTimes(Integer.parseInt(levelProps.getProperty("eatTimes")));
+        levelDescription.setTime(Integer.parseInt(levelProps.getProperty("time")));
+        levelDescription.setSnakeSpeed(Integer.parseInt(levelProps.getProperty("snakeSpeed")));
+        levelDescription.setSnakeX(Integer.parseInt(levelProps.getProperty("snakeX")));
+        levelDescription.setSnakeY(Integer.parseInt(levelProps.getProperty("snakeY")));
+
+
         return levelDescription;
     }
 
