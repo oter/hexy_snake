@@ -6,19 +6,33 @@ import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class SnakeScene extends JPanel {
 
+    int time;
+
+    private Timer gameTimer;
+
+    protected void pauseGameTimer() {
+        gameTimer.stop();
+    }
+
+    protected void continueGameTimer() {
+        gameTimer.start();
+    }
+
     private BufferedImage backgroundImage;
 
     private HexCeil ceilsMatrix[][];
 
     private LevelDescription levelDescription;
+
+    protected LevelDescription getLevelDescription() {
+        return levelDescription;
+    }
 
     public int getScreenWidth() {
         return levelDescription.getScreenWidth();
@@ -38,12 +52,6 @@ public class SnakeScene extends JPanel {
 
     private GameStateProvider gameStateProvider;
 
-    private Snake snake;
-
-    private Timer gameTimer;
-
-    private int currentScore = 0;
-
     public int getTime() {
         return time;
     }
@@ -52,48 +60,49 @@ public class SnakeScene extends JPanel {
         this.time = time;
     }
 
-    int time = 0;
+    public int getEatTimes() {
+        return eatTimes;
+    }
 
-    int eatTimes = 0;
+    int eatTimes;
 
-    int ateTimes = 10;
+    public int getAteTimes() {
+        return ateTimes;
+    }
+
+    public void setAteTimes(int ateTimes) {
+        this.ateTimes = ateTimes;
+    }
+
+    int ateTimes;
 
     public SnakeScene(GameStateProvider gameStateProvider, int level) {
         this.gameStateProvider = gameStateProvider;
-        currentScore = getGameStateProvider().getScore();
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    getGameStateProvider().setGameState(GameStates.GAME_OVER_MENU);
-                    getGameStateProvider().setScore(currentScore);
-                }
-                if (snake != null) {
-                    snake.changeDirection(e);
-                }
-            }
-        });
 
         setFocusable(true);
         requestFocusInWindow();
         loadLevel(level);
     }
 
+    private boolean gameTimerStopped = false;
+
+    protected void stopTimer() {
+        gameTimer.setRepeats(false);
+        gameTimer.stop();
+        gameTimerStopped = true;
+    }
+
     public void endGame() {
-        if (gameTimer != null) {
-            gameTimer.stop();
-        }
+        stopTimer();
         getGameStateProvider().setGameState(GameStates.GAME_OVER_MENU);
     }
 
-    public void setLevel(final LevelDescription levelDescription) {
+    private void setLevel(LevelDescription levelDescription) {
         this.levelDescription = levelDescription;
         createCeils();
         time = levelDescription.getTime();
         eatTimes = levelDescription.getEatTimes();
-        snake = new Snake(levelDescription, getGameStateProvider(), levelDescription.getSnakeX(), levelDescription.getSnakeY());
+        ateTimes = 0;
         try {
             backgroundImage = ImageIO.read(new File(levelDescription.getBackgroundPath()));
         } catch (IOException e) {
@@ -101,27 +110,21 @@ public class SnakeScene extends JPanel {
         }
         gameTimer = new Timer(1, new ActionListener() {
             int timerTicks = 0;
-            int snakeTicks = 0;
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                timerTicks++;
-                snakeTicks++;
+                if (!gameTimerStopped) {
+                    timerTicks++;
+                    if (timerTicks > 500) {
+                        timerTicks = 0;
+                        int time = getTime();
+                        if (time == 0) {
+                            endGame();
+                        }
+                        setTime(getTime() - 1);
 
-                if (snakeTicks > (int)((double) 1/ levelDescription.getSnakeSpeed() * 500)) {
-                    snakeTicks = 0;
-                    snake.snakeMove();
-                    repaint();
-                }
-
-                if (timerTicks > 500) {
-                    timerTicks = 0;
-                    int time = getTime();
-                    if (time == 0) {
-                        endGame();
+                        repaint();
                     }
-                    setTime(getTime() - 1);
-
-                    repaint();
                 }
             }
         });
@@ -133,16 +136,6 @@ public class SnakeScene extends JPanel {
         LevelLoader levelLoader = new LevelLoader();
         LevelDescription description = levelLoader.LoadLevel(level);
         setLevel(description);
-        System.out.println("Levels count: " + String.valueOf(levelLoader.getLevelsCount()));
-        System.out.println("Level: " + String.valueOf(description.getLevelName()));
-    }
-
-    public void redraw(Graphics g) {
-        for (int i = 0; i < levelDescription.getFieldSizeX(); i++) {
-            for (int j = 0; j < levelDescription.getFieldSizeY(); j++) {
-                ceilsMatrix[i][j].drawCeil(g, SnakeProperties.getColorByTag(levelDescription.getCellTag(i, j)));
-            }
-        }
     }
 
     void createCeils() {
@@ -153,7 +146,6 @@ public class SnakeScene extends JPanel {
 
         double ceilsWidth = ceilsRadius * polygonVal + betweenLen;
         double ceilHalf = ceilsRadius * polygonVal;
-
 
         for (int i = 0; i < levelDescription.getFieldSizeX(); i++) {
             for (int j = 0; j < levelDescription.getFieldSizeY(); j++) {
@@ -172,9 +164,6 @@ public class SnakeScene extends JPanel {
 
         ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        //g.setColor(SnakeProperties.backgroundColor);
-        //g.fillRect(0, 0, getScreenWidth(), getScreenHeight());
-
         g.drawImage(backgroundImage, 0, 0, null);
 
         // Player name label
@@ -185,7 +174,7 @@ public class SnakeScene extends JPanel {
         // Score label
         g.setFont(SnakeProperties.scoresPlayerLabelFont);
         g.setColor(SnakeProperties.scoresLabelColor);
-        g.drawString(Integer.toString(currentScore), 25, 80);
+        g.drawString(Integer.toString(getGameStateProvider().getScore()), 25, 80);
 
         // Current level name label
         g.setFont(SnakeProperties.levelLabelFont);
@@ -203,11 +192,10 @@ public class SnakeScene extends JPanel {
         g.drawString(Integer.toString(ateTimes), 350, 80);
 
         // draw game field
-        redraw(g);
-
-        //draw snake body
-        if (snake != null) {
-            snake.redraw(g);
+        for (int i = 0; i < levelDescription.getFieldSizeX(); i++) {
+            for (int j = 0; j < levelDescription.getFieldSizeY(); j++) {
+                ceilsMatrix[i][j].drawCeil(g, SnakeProperties.getColorByTag(levelDescription.getCellTag(i, j)));
+            }
         }
     }
 }

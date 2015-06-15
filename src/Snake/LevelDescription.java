@@ -2,6 +2,14 @@ package Snake;
 
 public class LevelDescription {
 
+    public String getBackgroundPath() {
+        return backgroundPath;
+    }
+
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
+    }
+
     private String backgroundPath;
 
     private int snakeCellRadius = -1;
@@ -34,14 +42,6 @@ public class LevelDescription {
 
     public int getBetweenCellLen() {
         return betweenCellLen;
-    }
-
-    public String getBackgroundPath() {
-        return backgroundPath;
-    }
-
-    public void setBackgroundPath(String backgroundPath) {
-        this.backgroundPath = backgroundPath;
     }
 
     public void setBetweenCellLen(int betweenCellLen) {
@@ -136,7 +136,11 @@ public class LevelDescription {
     }
 
     public TagType getCellTag(int x, int y) {
-        return field[x][y];
+        if (x < 0 || y < 0 || y >= getFieldSizeY() || x >= getFieldSizeX()) {
+            return TagType.EMPTY_TAG;
+        } else {
+            return field[x][y];
+        }
     }
 
     public String getLevelName() {

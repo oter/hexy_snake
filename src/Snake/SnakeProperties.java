@@ -1,9 +1,7 @@
 package Snake;
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.Properties;
 
 public class SnakeProperties {
 
@@ -25,7 +23,7 @@ public class SnakeProperties {
 
     public static Dimension gameFieldPos = new Dimension(60, 100);
 
-    public static final Color levelLabelColor = new Color(0x0D818E);
+    public static final Color levelLabelColor = new Color(0x17D2E9);
 
     public static final Font levelLabelFont = new Font("Curlz MT", Font.BOLD, 40);
 
@@ -69,11 +67,11 @@ public class SnakeProperties {
 
     private static final Color emptyTagColor = new Color(255, 218, 185);
 
-    private static final Color snakeBaseColor = new Color(255, 0, 0);
+    private static final Color snakeBaseColor = new Color(56, 29, 28);
 
-    private static final Color brickFlag = new Color(255, 255, 0);
+    private static final Color brickFlag = new Color(151, 91, 34);
 
-    private static final Color food1Color = new Color(0, 255, 0);
+    private static final Color food1Color = new Color(0, 188, 10);
 
     public static final double getPolygonConstVal(){
         return polygonConstVal;
@@ -83,12 +81,32 @@ public class SnakeProperties {
         return polygonPoints;
     }
 
+    private static int getRandomSign() {
+        return Math.random() > 0.5 ? -1 : 1;
+    }
+
+    private static int getColorComponent(int c) {
+        int newComponent = c + (int)(Math.random() * 2 * getRandomSign()) + 4;
+        if (newComponent < 0) {
+            newComponent = 0;
+        }
+        if (newComponent > 255) {
+            newComponent = 255;
+        }
+        return newComponent;
+    }
+
     public static final Color getSnakeNextColor(Color color) {
-        return color == null ? snakeBaseColor : color.brighter();
+        Color newColor;
+        if (color == null) {
+            newColor = snakeBaseColor;
+        } else {
+            newColor = new Color(getColorComponent(color.getRed()), getColorComponent(color.getGreen()), getColorComponent(color.getBlue()));
+        }
+        return newColor;
     }
 
     public static final Color getColorByTag(TagType tag) {
-        // System.out.println("Tag: " + String.valueOf(tag.getValue()));
         switch (tag) {
             case EMPTY_TAG:
                 return emptyTagColor;

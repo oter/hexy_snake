@@ -12,8 +12,6 @@ public class GameStateProvider extends JFrame {
 
     private int currentLevel;
 
-    private int score;
-
     public int getScore() {
         return score;
     }
@@ -21,6 +19,8 @@ public class GameStateProvider extends JFrame {
     public void setScore(int score) {
         this.score = score;
     }
+
+    private int score;
 
     public int getCurrentLevel() {
         return currentLevel;
@@ -34,12 +34,17 @@ public class GameStateProvider extends JFrame {
      //   this.currentScore = currentScore;
     //}
 
-    public void nextLevel() {
-
-    }
-
     public static GameStates getGameState() {
         return gameState;
+    }
+
+    private void snakeLoad(int level) {
+        Snake snake = new Snake(this, level);
+        setContentPane(snake);
+        Dimension screenSize = new Dimension(snake.getScreenWidth(), snake.getScreenHeight());
+        setSize(screenSize);
+        setMinimumSize(screenSize);
+        snake.focus();
     }
 
     public void setGameState(GameStates gameState) {
@@ -59,16 +64,21 @@ public class GameStateProvider extends JFrame {
                 setMinimumSize(newPlayerMenu.getSize());
                 newPlayerMenu.focusUserField();
                 break;
-            case PAUSE_MENU:
+            case NEXT_LEVEL:
+                int current = getCurrentLevel();
+                System.out.println("next level: " + Integer.toString(current));
+                if (current == LevelLoader.getLevelsCount()) {
+                    setGameState(GameStates.GAME_OVER_MENU);
+                } else {
+                    setCurrentLevel(getCurrentLevel() + 1);
+                    snakeLoad(getCurrentLevel());
+                }
 
                 break;
             case PLAY_GAME:
-                SnakeScene snakeScene = new SnakeScene(this, 1);
-                setContentPane(snakeScene);
-                Dimension screenSize = new Dimension(snakeScene.getScreenWidth(), snakeScene.getScreenHeight());
-                setSize(screenSize);
-                setMinimumSize(screenSize);
-                snakeScene.focus();
+                setCurrentLevel(1);
+                setScore(0);
+                snakeLoad(getCurrentLevel());
 
                 break;
             case SCORES_MENU:
@@ -83,6 +93,13 @@ public class GameStateProvider extends JFrame {
                 setContentPane(gameOverMenu);
                 setSize(gameOverMenu.getSize());
                 setMinimumSize(gameOverMenu.getSize());
+                int id = ScoresProperties.getPlayerId(ScoresProperties.getCurrentPlayerName());
+                int lastScore = ScoresProperties.getPlayerScore(id);
+                int currentScore = getScore();
+                if (currentScore > lastScore) {
+                    ScoresProperties.setPlayerScore(id, currentScore);
+                }
+
                 break;
         }
         pack();

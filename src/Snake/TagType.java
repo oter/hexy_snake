@@ -5,7 +5,7 @@ public enum TagType {
 
     private final int value;
 
-    private TagType(int value) {
+    TagType(int value) {
         this.value = value;
     }
 

@@ -23,14 +23,6 @@ public class LevelLoader {
         return buffer.toString();
     }
 
-    public void generate() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.out.println(this.getCellKeyStr(i, j, "tag") + "=0");
-            }
-        }
-    }
-
     private static void loadProperties(String fileName, Properties properties) {
         try {
             File propsFile = new File(fileName);
@@ -52,7 +44,7 @@ public class LevelLoader {
         levelsCount = Integer.parseInt(levelsProps.getProperty(SnakeProperties.levelsCountKey));
     }
 
-    public int getLevelsCount() {
+    public static int getLevelsCount() {
         return levelsCount;
     }
 
