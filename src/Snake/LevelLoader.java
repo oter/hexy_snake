@@ -8,23 +8,12 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 public class LevelLoader {
-    private static final String levelsPropsFilename = "level_props.properties";
-
-    private static final String levelPropsFilename = "level.properties";
-
-    private static final String levelsStr = "levels";
+    public static int levelsCount = 0;
 
     private static final Properties levelsProps = new Properties();
 
-    private static int levelsCount = 0;
-
-    private static final String levelsCountKey = "levelsCount";
-
-    private static final String cellKey = "Cell.";
-
-
     private static String getCellKeyStr(int x, int y, String key) {
-        StringBuffer buffer = new StringBuffer(cellKey);
+        StringBuffer buffer = new StringBuffer(SnakeProperties.cellKey);
         buffer.append(x);
         buffer.append('.');
         buffer.append(y);
@@ -59,8 +48,8 @@ public class LevelLoader {
 
 
     public LevelLoader() {
-        loadProperties(levelsPropsFilename, levelsProps);
-        levelsCount = Integer.parseInt(levelsProps.getProperty(levelsCountKey));
+        loadProperties(SnakeProperties.levelsPropsFilename, levelsProps);
+        levelsCount = Integer.parseInt(levelsProps.getProperty(SnakeProperties.levelsCountKey));
     }
 
     public int getLevelsCount() {
@@ -72,11 +61,11 @@ public class LevelLoader {
 
         Properties levelProps = new Properties();
         StringBuffer fileName = new StringBuffer();
-        fileName.append(levelsStr);
+        fileName.append(SnakeProperties.levelsStr);
         fileName.append(File.separatorChar);
         fileName.append(level);
         fileName.append(File.separatorChar);
-        fileName.append(levelPropsFilename);
+        fileName.append(SnakeProperties.levelPropsFilename);
 
         loadProperties(fileName.toString(), levelProps);
 
@@ -109,17 +98,10 @@ public class LevelLoader {
         levelDescription.setSnakeSpeed(Integer.parseInt(levelProps.getProperty("snakeSpeed")));
         levelDescription.setSnakeX(Integer.parseInt(levelProps.getProperty("snakeX")));
         levelDescription.setSnakeY(Integer.parseInt(levelProps.getProperty("snakeY")));
-
+        levelDescription.setBetweenCellLen(Integer.parseInt(levelProps.getProperty("betweenCellLen")));
+        levelDescription.setSnakeCellRadius(Integer.parseInt(levelProps.getProperty("cellRadius")));
+        levelDescription.setBackgroundPath(levelProps.getProperty("backgroundPath"));
 
         return levelDescription;
-    }
-
-    public void printLevelsInfo(Properties p) {
-        Enumeration keys = p.keys();
-        while(keys.hasMoreElements()) {
-            String key = (String) keys.nextElement();
-            String value = p.getProperty(key);
-            System.out.println("Key: " + key + ": " + value);
-        }
     }
 }

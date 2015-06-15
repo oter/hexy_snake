@@ -1,6 +1,13 @@
 package Snake;
 
 public class LevelDescription {
+
+    private String backgroundPath;
+
+    private int snakeCellRadius = -1;
+
+    private int betweenCellLen = -1;
+
     private int fieldSizeX = -1;
 
     private int fieldSizeY = -1;
@@ -16,6 +23,30 @@ public class LevelDescription {
     private int snakeX = -1;
 
     private int snakeSpeed = -1;
+
+    public int getSnakeCellRadius() {
+        return snakeCellRadius;
+    }
+
+    public void setSnakeCellRadius(int snakeCellRadius) {
+        this.snakeCellRadius = snakeCellRadius;
+    }
+
+    public int getBetweenCellLen() {
+        return betweenCellLen;
+    }
+
+    public String getBackgroundPath() {
+        return backgroundPath;
+    }
+
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
+    }
+
+    public void setBetweenCellLen(int betweenCellLen) {
+        this.betweenCellLen = betweenCellLen;
+    }
 
     public int getSnakeX() {
         return snakeX;

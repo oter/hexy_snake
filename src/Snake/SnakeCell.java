@@ -23,8 +23,8 @@ public class SnakeCell extends HexCeil {
         this.y = y;
     }
 
-    public SnakeCell(int x, int y, int globalX, int globalY) {
-        super(globalX, globalY);
+    public SnakeCell(int cellRadius, int x, int y, int globalX, int globalY) {
+        super(cellRadius, globalX, globalY);
         setX(x);
         setY(y);
     }

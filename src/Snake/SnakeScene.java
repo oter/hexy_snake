@@ -1,5 +1,6 @@
 package Snake;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
@@ -7,8 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SnakeScene extends JPanel {
+
+    private BufferedImage backgroundImage;
 
     private HexCeil ceilsMatrix[][];
 
@@ -67,7 +73,6 @@ public class SnakeScene extends JPanel {
                 if (snake != null) {
                     snake.changeDirection(e);
                 }
-
             }
         });
 
@@ -83,29 +88,38 @@ public class SnakeScene extends JPanel {
         getGameStateProvider().setGameState(GameStates.GAME_OVER_MENU);
     }
 
-    public void setLevel(LevelDescription levelDescription) {
+    public void setLevel(final LevelDescription levelDescription) {
         this.levelDescription = levelDescription;
         createCeils();
         time = levelDescription.getTime();
         eatTimes = levelDescription.getEatTimes();
-        snake = new Snake(levelDescription, levelDescription.getSnakeX(), levelDescription.getSnakeY());
+        snake = new Snake(levelDescription, getGameStateProvider(), levelDescription.getSnakeX(), levelDescription.getSnakeY());
+        try {
+            backgroundImage = ImageIO.read(new File(levelDescription.getBackgroundPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         gameTimer = new Timer(1, new ActionListener() {
-            int ticks = 0;
+            int timerTicks = 0;
+            int snakeTicks = 0;
             @Override
             public void actionPerformed(ActionEvent e) {
-                ticks++;
+                timerTicks++;
+                snakeTicks++;
 
-                if (ticks > 500) {
-                    ticks = 0;
+                if (snakeTicks > (int)((double) 1/ levelDescription.getSnakeSpeed() * 500)) {
+                    snakeTicks = 0;
+                    snake.snakeMove();
+                    repaint();
+                }
+
+                if (timerTicks > 500) {
+                    timerTicks = 0;
                     int time = getTime();
                     if (time == 0) {
                         endGame();
                     }
                     setTime(getTime() - 1);
-
-                    if (snake != null) {
-                        snake.snakeMove();
-                    }
 
                     repaint();
                 }
@@ -133,7 +147,7 @@ public class SnakeScene extends JPanel {
 
     void createCeils() {
         ceilsMatrix = new HexCeil[levelDescription.getFieldSizeX()][levelDescription.getFieldSizeY()];
-        int ceilsRadius = SnakeProperties.getCeilRadius();
+        int ceilsRadius = levelDescription.getSnakeCellRadius();
         double polygonVal = SnakeProperties.getPolygonConstVal();
         int betweenLen = SnakeProperties.betweenLen;
 
@@ -147,7 +161,7 @@ public class SnakeScene extends JPanel {
                 int y = (int)Math.round((j * 2 * (ceilHalf * polygonVal - betweenLen / 2 * polygonVal +
                         1 / polygonVal * betweenLen)));
 
-                ceilsMatrix[i][j] = new HexCeil(x + SnakeProperties.gameFieldPos.width, y + SnakeProperties.gameFieldPos.height);
+                ceilsMatrix[i][j] = new HexCeil(levelDescription.getSnakeCellRadius(), x + SnakeProperties.gameFieldPos.width, y + SnakeProperties.gameFieldPos.height);
             }
         }
     }
@@ -158,8 +172,10 @@ public class SnakeScene extends JPanel {
 
         ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.setColor(SnakeProperties.backgroundColor);
-        g.fillRect(0, 0, getScreenWidth(), getScreenHeight());
+        //g.setColor(SnakeProperties.backgroundColor);
+        //g.fillRect(0, 0, getScreenWidth(), getScreenHeight());
+
+        g.drawImage(backgroundImage, 0, 0, null);
 
         // Player name label
         g.setFont(SnakeProperties.playerFont);

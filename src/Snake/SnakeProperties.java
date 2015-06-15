@@ -3,16 +3,25 @@ package Snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Properties;
 
 public class SnakeProperties {
+
+    public static final String levelsPropsFilename = "level_props.properties";
+
+    public static final String levelPropsFilename = "level.properties";
+
+    public static final String levelsStr = "levels";
+
+    public static final String levelsCountKey = "levelsCount";
+
+    public static final String cellKey = "Cell.";
 
     private static final int polygonPoints = 6;
 
     private static final double polygonConstVal = Math.sqrt(3) / 2;
 
     public static final int betweenLen = 4;
-
-    private static int ceilRadius = 30;
 
     public static Dimension gameFieldPos = new Dimension(60, 100);
 
@@ -68,10 +77,6 @@ public class SnakeProperties {
 
     public static final double getPolygonConstVal(){
         return polygonConstVal;
-    }
-
-    public static int getCeilRadius() {
-        return ceilRadius;
     }
 
     public static int getPolygonPoints() {

@@ -4,12 +4,7 @@ import java.awt.*;
 
 public class HexCeil extends JComponent {
 
-    private static final CeilGenerator ceilGenerator = new CeilGenerator(SnakeProperties.getPolygonPoints(),
-            SnakeProperties.getCeilRadius());
-
-    private Color fillColor;
-
-    private Color borderColor;
+    private static CeilGenerator ceilGenerator;
 
     private Polygon polygon;
 
@@ -17,9 +12,10 @@ public class HexCeil extends JComponent {
 
     private int posY;
 
-    public HexCeil(int posX, int posY) {
+    public HexCeil(int cellRadius, int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
+        ceilGenerator = new CeilGenerator(SnakeProperties.getPolygonPoints(), cellRadius);
         createPolygon();
     }
 
@@ -32,5 +28,7 @@ public class HexCeil extends JComponent {
     protected void drawCeil(Graphics g, Color color) {
         g.setColor(color);
         g.fillPolygon(polygon);
+        g.setColor(new Color(Color.BLACK.getRGB()));
+        g.drawPolygon(polygon);
     }
 }

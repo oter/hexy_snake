@@ -10,6 +10,12 @@ public class Snake {
 
     private SnakeDirection direction;
 
+    public GameStateProvider getGameStateProvider() {
+        return gameStateProvider;
+    }
+
+    private GameStateProvider gameStateProvider;
+
     private int currentScore;
 
     private Deque<SnakeCell> snakeBody = new ArrayDeque<SnakeCell>();
@@ -135,6 +141,7 @@ public class Snake {
             default:
                 break;
         }
+
         updateHead(x, y);
         // TODO: Snake collisions, snake eating
     }
@@ -148,7 +155,7 @@ public class Snake {
     }
 
     private void updateSnake(int xi, int yi) {
-        int ceilsRadius = SnakeProperties.getCeilRadius();
+        int ceilsRadius = levelDescription.getSnakeCellRadius();
         double polygonVal = SnakeProperties.getPolygonConstVal();
         int betweenLen = SnakeProperties.betweenLen;
 
@@ -158,7 +165,7 @@ public class Snake {
         int x = (int)Math.round(ceilsWidth * xi * 2 + ceilsWidth * (yi % 2 ));
         int y = (int)Math.round((yi * 2 * (ceilHalf * polygonVal - betweenLen / 2 * polygonVal + 1 / polygonVal * betweenLen)));
 
-        snakeBody.push(new SnakeCell(xi, yi, x + SnakeProperties.gameFieldPos.width, y + SnakeProperties.gameFieldPos.height));
+        snakeBody.push(new SnakeCell(levelDescription.getSnakeCellRadius(), xi, yi, x + SnakeProperties.gameFieldPos.width, y + SnakeProperties.gameFieldPos.height));
     }
 
     public void updateHead(int x, int y) {
@@ -168,7 +175,8 @@ public class Snake {
         updateSnake(x, y);
     }
 
-    public Snake(LevelDescription levelDescription, int x, int y){
+    public Snake(LevelDescription levelDescription, GameStateProvider gameStateProvider, int x, int y){
+        this.gameStateProvider = gameStateProvider;
         this.levelDescription = levelDescription;
         direction = SnakeDirection.SNAKE_RIGHT;
         updateSnake(x, y);
