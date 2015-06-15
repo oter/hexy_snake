@@ -12,7 +12,15 @@ public class GameStateProvider extends JFrame {
 
     private int currentLevel;
 
-    private int currentScore;
+    private int score;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public int getCurrentLevel() {
         return currentLevel;
@@ -22,13 +30,9 @@ public class GameStateProvider extends JFrame {
         this.currentLevel = currentLevel;
     }
 
-    public int getCurrentScore() {
-        return currentScore;
-    }
-
-    public void setCurrentScore(int currentScore) {
-        this.currentScore = currentScore;
-    }
+    //public void setCurrentScore(int currentScore) {
+     //   this.currentScore = currentScore;
+    //}
 
     public void nextLevel() {
 
@@ -75,7 +79,7 @@ public class GameStateProvider extends JFrame {
                 scoresMenu.focus();
                 break;
             case GAME_OVER_MENU:
-                GameOverMenu gameOverMenu = new GameOverMenu(this, getCurrentScore());
+                GameOverMenu gameOverMenu = new GameOverMenu(this, getScore());
                 setContentPane(gameOverMenu);
                 setSize(gameOverMenu.getSize());
                 setMinimumSize(gameOverMenu.getSize());

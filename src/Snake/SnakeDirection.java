@@ -1,0 +1,6 @@
+package Snake;
+
+public enum SnakeDirection {
+    SNAKE_LEFT, SNAKE_DOWN_LEFT, SNAKE_DOWN_RIGHT, SNAKE_RIGHT, SNAKE_UP_RIGHT, SNAKE_UP_LEFT
+}
+

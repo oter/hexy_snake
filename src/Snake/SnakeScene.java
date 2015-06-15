@@ -54,7 +54,7 @@ public class SnakeScene extends JPanel {
 
     public SnakeScene(GameStateProvider gameStateProvider, int level) {
         this.gameStateProvider = gameStateProvider;
-        currentScore = getGameStateProvider().getCurrentScore();
+        currentScore = getGameStateProvider().getScore();
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -62,7 +62,7 @@ public class SnakeScene extends JPanel {
                 super.keyPressed(e);
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     getGameStateProvider().setGameState(GameStates.GAME_OVER_MENU);
-                    getGameStateProvider().setCurrentScore(currentScore);
+                    getGameStateProvider().setScore(currentScore);
                 }
                 if (snake != null) {
                     snake.changeDirection(e);

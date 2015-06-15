@@ -8,25 +8,75 @@ import java.util.Iterator;
 
 public class Snake {
 
-    private int snakeDirection = 0;
+    private SnakeDirection direction;
+
+    private int currentScore;
 
     private Deque<SnakeCell> snakeBody = new ArrayDeque<SnakeCell>();
 
     private LevelDescription levelDescription;
 
+    public void setDirection(SnakeDirection direction) {
+        this.direction = direction;
+    }
+
+    public SnakeDirection getDirection() {
+        return direction;
+    }
+
+    public void turnLeft() {
+        switch (direction) {
+            case SNAKE_LEFT:
+                setDirection(SnakeDirection.SNAKE_DOWN_LEFT);
+                break;
+            case SNAKE_DOWN_LEFT:
+                setDirection(SnakeDirection.SNAKE_DOWN_RIGHT);
+                break;
+            case SNAKE_DOWN_RIGHT:
+                setDirection(SnakeDirection.SNAKE_RIGHT);
+                break;
+            case SNAKE_RIGHT:
+                setDirection(SnakeDirection.SNAKE_UP_RIGHT);
+                break;
+            case SNAKE_UP_RIGHT:
+                setDirection(SnakeDirection.SNAKE_UP_LEFT);
+                break;
+            case SNAKE_UP_LEFT:
+                setDirection(SnakeDirection.SNAKE_LEFT);
+                break;
+        }
+    }
+
+    public void turnRight() {
+        switch (direction) {
+            case SNAKE_LEFT:
+                setDirection(SnakeDirection.SNAKE_UP_LEFT);
+                break;
+            case SNAKE_DOWN_LEFT:
+                setDirection(SnakeDirection.SNAKE_LEFT);
+                break;
+            case SNAKE_DOWN_RIGHT:
+                setDirection(SnakeDirection.SNAKE_DOWN_LEFT);
+                break;
+            case SNAKE_RIGHT:
+                setDirection(SnakeDirection.SNAKE_DOWN_RIGHT);
+                break;
+            case SNAKE_UP_RIGHT:
+                setDirection(SnakeDirection.SNAKE_RIGHT);
+                break;
+            case SNAKE_UP_LEFT:
+                setDirection(SnakeDirection.SNAKE_UP_RIGHT);
+                break;
+        }
+    }
+
     public void changeDirection(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                snakeDirection++;
-                if (snakeDirection > 5) {
-                    snakeDirection = 0;
-                }
+                turnLeft();
                 break;
             case KeyEvent.VK_RIGHT:
-                snakeDirection--;
-                if (snakeDirection < 0) {
-                    snakeDirection = 5;
-                }
+                turnRight();
                 break;
             case KeyEvent.VK_UP:
                 snakeEat();
@@ -51,44 +101,36 @@ public class Snake {
     public void snakeMove() {
         int x = getSnakeX();
         int y = getSnakeY();
-        switch (snakeDirection) {
-
-            case 0:
+        switch (direction) {
+            case SNAKE_LEFT:
                 x--;
                 break;
-            case 1:
+            case SNAKE_DOWN_LEFT:
                 if (y % 2 == 0) {
                     x--;
                 }
                 y++;
                 break;
-            case 2:
-                if (y % 2 == 0) {
-
-                    y++;
-                } else
-                {
+            case SNAKE_DOWN_RIGHT:
+                if (y % 2 != 0) {
                     x++;
-                    y++;
                 }
+                y++;
                 break;
-            case 3:
+            case SNAKE_RIGHT:
                 x++;
                 break;
-            case 4:
+            case SNAKE_UP_RIGHT:
                 if (y % 2 != 0) {
                     x++;
                 }
                 y--;
                 break;
-            case 5:
+            case SNAKE_UP_LEFT:
                 if (y % 2 == 0) {
                     x--;
-                    y--;
-                } else
-                {
-                    y--;
                 }
+                y--;
                 break;
             default:
                 break;
@@ -102,7 +144,6 @@ public class Snake {
         while (iterator.hasNext()) {
             SnakeCell cell = iterator.next();
             cell.drawCeil(g, Color.RED);
-            System.out.println("Draw: " + Integer.toString(cell.getX()) + ":" + Integer.toString(cell.getY()));
         }
     }
 
@@ -129,7 +170,7 @@ public class Snake {
 
     public Snake(LevelDescription levelDescription, int x, int y){
         this.levelDescription = levelDescription;
+        direction = SnakeDirection.SNAKE_RIGHT;
         updateSnake(x, y);
-        snakeDirection = 3;
     }
 }
